@@ -10,9 +10,10 @@ struct Matriz
   int y;
   int dato;
   struct Matriz *siguiente;
+  struct Matriz *anterior;
 };
 
-void crearmatriz (); 
+struct Matriz * crearmatriz();
 struct Matriz *pedir (struct Matriz *); 
 struct Matriz *insertar (struct Matriz *, int, int, int);
 void mostrar (struct Matriz *); 
@@ -21,5 +22,7 @@ struct Matriz *ColocarArriba (struct Matriz *, int, int, int);
 struct Matriz *ColocarAbajo (struct Matriz *, int, int, int);
 struct Matriz *ColocarIzquierda (struct Matriz *, int, int, int);
 struct Matriz *ColocarDerecha (struct Matriz *, int, int, int);
-
+void menu();
+void menu2();
+void instrucciones();
 #endif

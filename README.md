@@ -3,7 +3,7 @@
 
 #Integrantes:
 
-Cruz Segundo Moises 2018391001 1cv3
+Cruz Segundo Moises 2018391001 1cv10
 
 Munguia Galeana Francisco Javier 2019630211 1cv8
 

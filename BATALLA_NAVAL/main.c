@@ -3,7 +3,6 @@
 int
 main ()
 {
-  crearmatriz ();
+  menu ();
   return 0;
 }
-

@@ -24,7 +24,7 @@ pedir (struct Matriz *matriz)
   for (i = 1; i <= 10; i++)
     {
       for (j = 1; j <= 10; j++)
-	matriz = insertar (matriz, 0, i, j);
+	matriz = insertar (matriz, 0, j, i);
     }
   
   return matriz;
@@ -86,7 +86,7 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco)
   int cont = 1;
   while (aux != NULL)
     {
-      if (aux->y == y-1 && aux->x >= x-1)
+      if (aux->x == x  && aux->y >= y)
 	{			//COLOCAR HACIA ABAJO
 	  aux->dato = tambarco;
 	  if (cont == tambarco)
@@ -268,6 +268,15 @@ void menu2(){
 				printf("Dime el tamaño del barco: \n");
 				scanf("%d", &tam);
 				matriz= ColocarAbajo(matriz, x, y, tam);
+				break;
+		case 2: printf("Dame la coordenada en x: \n");
+                                scanf("%d", &x);
+                                printf("Dame la coordenada en y: \n");
+                                scanf("%d", &y);
+                                printf("Dime el tamaño del barco: \n");
+                                scanf("%d", &tam);
+				matriz= ColocarArriba(matriz, x, y, tam);
+				break;	
 	}	
 		printf("Este es el tablero de juego:       ");
 		

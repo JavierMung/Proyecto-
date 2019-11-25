@@ -7,7 +7,11 @@ main.o: main.c
 batallanaval.o: batallanaval.c
 	gcc -c batallanaval.c
 
+indent: 
+	indent *.c
+
 run: a.out
 	./a.out
+
 clean: 
-	rm a.out *.o
+	rm a.out *.o *.c~

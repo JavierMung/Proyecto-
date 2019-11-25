@@ -43,6 +43,8 @@ insertar (struct Matriz *matriz, int dato, int x, int y)
       matriznueva->x = x;
       matriznueva->y = y;
       matriznueva->siguiente = NULL;
+      matriznueva->anterior = NULL;
+
       if (matriz == NULL)
 	matriz = matriznueva;
       else
@@ -51,7 +53,9 @@ insertar (struct Matriz *matriz, int dato, int x, int y)
 	  while (aux->siguiente != NULL)
 	    aux = aux->siguiente;
 	  aux->siguiente = matriznueva;
+	  matriznueva->anterior=aux;
 	}
+      return matriz;
     }
   else
     printf ("\n Sin espacio");
@@ -84,10 +88,19 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco)
 {
   struct Matriz *aux = matriz;
   int cont = 1;
+  if(( 10-tambarco )<y){
+
+	  printf("Barco demasiado grande \n");
+	  return matriz;
+  }
   while (aux != NULL)
     {
       if (aux->x == x  && aux->y >= y)
-	{			//COLOCAR HACIA ABAJO
+	{
+          if(aux->dato!=0){
+              printf("Barco demasiado grande\n");
+	      return matriz;
+	  }		      
 	  aux->dato = tambarco;
 	  if (cont == tambarco)
 	    break;
@@ -123,12 +136,33 @@ struct Matriz *
 ColocarDerecha (struct Matriz *matriz, int x, int y, int tambarco)
 {
   struct Matriz *aux = matriz;
-  int cont = 1;
+  int cont = 1, aux2= 1;
+  if((10-tambarco)<x){
+  	printf("Barco demasiado grande:D\n");
+ 	return matriz;
+  }
+  
   while (aux != NULL)
     {
-      if (aux->x == x && aux->y >= y)
-	{			//COLOCAR derecha
-	  aux->dato = 4;
+	     
+      if (aux->y == y && aux->x >= x)
+	{
+		if(aux->dato!= 0){
+		printf("Barco demasiado grande \n ");
+		aux=aux->anterior;
+		
+		
+		while(aux2!=cont){
+		aux->dato=cont-1;
+		aux= aux->anterior;
+		
+		aux2++;
+		}
+
+		break;
+		}
+
+	  aux->dato = tambarco;
 	  if (cont == tambarco)
 	    break;
 	  cont++;
@@ -218,7 +252,7 @@ void menu(){
 	struct Matriz * matriz;
 	matriz= NULL;
 	printf("                           ***Bienvenido al juego --BATALLA NAVA--***\n");
-
+	__fpurge(stdin);
 	printf("\n\t\t\t MENU 	\n");
 	printf("-----------------------------\n");
 	printf("1. Iniciar Juego\n");
@@ -259,8 +293,12 @@ void menu2(){
 	printf("4. Colocar Barco Izquierda\n");
 	printf("5. Comenzar\n");
 	printf("6. SALIR\n");
-	scanf("%d",&op);
+	
+	do{
+		printf("Escoje la opcion: ");
+		scanf("%d", &op);
 	switch(op){
+
 		case 1: printf("Dame la coordenada en x: \n");
 				scanf("%d", &x);
 				printf("Dame la coordenada en y: \n");
@@ -277,17 +315,38 @@ void menu2(){
                                 scanf("%d", &tam);
 				matriz= ColocarArriba(matriz, x, y, tam);
 				break;	
-	}	
+		case 3: printf("Dame la coordenada en x: \n");
+                                scanf("%d", &x);
+                                printf("Dame la coordenada en y: \n");
+                                scanf("%d", &y);
+                                printf("Dime el tamaño del barco: \n");
+                                scanf("%d", &tam);
+                                matriz= ColocarDerecha(matriz, x, y, tam);
+                                break;
+		case 4: printf("Dame la coordenada en x: \n");
+                                scanf("%d", &x);
+                                printf("Dame la coordenada en y: \n");
+                                scanf("%d", &y);
+                                printf("Dime el tamaño del barco: \n");
+                                scanf("%d", &tam);
+                                matriz= ColocarIzquierda(matriz, x, y, tam);
+                                break;
+		case 5: break;
+		
+		case 6: 	exit(-1);
+		
+	}
+	}while(op!=5);	
 		printf("Este es el tablero de juego:       ");
 		
 				mostrar(matriz); 
 
 }
 void instrucciones(){
-	system("cls");
 	printf("\n\tPara este juego es necesario ... \n ");
-	system("pause");
-	system("cls");
+	printf("presione enter para continuar: ");
+	__fpurge(stdin);
+	getchar();
 	menu();
 }
 

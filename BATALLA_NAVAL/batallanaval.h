@@ -9,22 +9,30 @@ struct Matriz
 {
   int x;
   int y;
+  int aciertos;
   int dato;
   struct Matriz *siguiente;
   struct Matriz *anterior;
 };
 
-struct Matriz * crearmatriz();
-struct Matriz *pedir (struct Matriz *); 
+struct Matriz * crearmatriz(struct Matriz *);
+struct Matriz *generarcoordenadas(struct Matriz *); 
 struct Matriz *insertar (struct Matriz *, int, int, int);
 struct Matriz *ColocarArriba (struct Matriz *, int, int, int);
 struct Matriz *ColocarAbajo (struct Matriz *, int, int, int);
 struct Matriz *ColocarIzquierda (struct Matriz *, int, int, int);
 struct Matriz *ColocarDerecha (struct Matriz *, int, int, int);
+struct Matriz *tablero(struct Matriz *);
 void mostrar(struct Matriz *);
 struct Matriz *coordenadas(struct Matriz *, int );
+struct Matriz *comenzar(struct Matriz *, int);
 void menu();
-void menu2();
+struct Matriz *colocacion(struct Matriz *, int);
 void instrucciones();
+<<<<<<< HEAD
 struct Matriz *aleatorios(struct  Matriz *, int *);
+=======
+void vs();
+void campodebatalla(struct Matriz *);
+>>>>>>> 55778731264c512c35978efed67a483f83822823
 #endif

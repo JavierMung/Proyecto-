@@ -70,9 +70,9 @@ ColocarArriba (struct Matriz *matriz, int x, int y, int tambarco)
   int cont = 1;
   while (aux != NULL)
     {
-      if (aux->y == y && aux->x < 10)
-	{			//COLOCAR HACIA ARRIBA
-	  aux->dato = 1;
+      if (aux->x == x && aux->y >= ((y - tambarco) + 1))
+	{
+	  aux->dato = tambarco;
 	  if (cont == tambarco)
 	    break;
 	  cont++;
@@ -121,9 +121,9 @@ ColocarIzquierda (struct Matriz *matriz, int x, int y, int tambarco)
   int cont = 1;
   while (aux != NULL)
     {
-      if (aux->x == x && aux->y < 10)
+      if (aux->x > (x - tambarco) && aux->y == y)
 	{			//COLOCAR IZQUIERDA
-	  aux->dato = 3;
+	  aux->dato = tambarco;
 	  if (cont == tambarco)
 	    break;
 	  cont++;
@@ -154,13 +154,10 @@ ColocarDerecha (struct Matriz *matriz, int x, int y, int tambarco)
 	    {
 	      printf ("Barco demasiado grande \n ");
 	      aux = aux->anterior;
-
-
 	      while (aux2 != cont)
 		{
 		  aux->dato = cont - 1;
 		  aux = aux->anterior;
-
 		  aux2++;
 		}
 
@@ -184,37 +181,29 @@ mostrar (struct Matriz *matriz)	/*Funcion para darle formato al tablero y coloca
   int i, j, b = 4;
   printf ("\n");
   for (i = 0; i <= 10; i++)
-
     {
       if (i == 0)
 	printf ("     ");
-
       else
 	printf (" %2i  ", i);
     }
   printf ("\n");
   for (i = 0; i < 55; i++)
-
     {
       if (i < 4)
 	printf (" ");
-
       else
 	printf ("_");
     }
   printf ("\n");
   for (i = 0; i < 10; i++)
-
     {
       printf ("%2i  |", i + 1);
       for (j = 0; j < 10; j++)
-
 	{
 	  if (i == 10)
-
 	    {
 	      for (i = 0; i < 10; i++)
-
 		{
 		  printf (" | %d ", i + 1);
 		}
@@ -228,10 +217,8 @@ mostrar (struct Matriz *matriz)	/*Funcion para darle formato al tablero y coloca
 	}
       printf ("\n");
       for (j = 0; j < 55; j++)
-
 	{
 	  if (j == b)
-
 	    {
 	      printf ("|");
 	      b += 5;
@@ -239,10 +226,8 @@ mostrar (struct Matriz *matriz)	/*Funcion para darle formato al tablero y coloca
 
 	  else if (j < 4)
 	    printf (" ");
-
 	  else if (i == 9)
 	    printf ("_");
-
 	  else
 	    printf ("-");
 	}
@@ -301,7 +286,7 @@ menu ()
 void
 menu2 ()
 {
-  int opcion = 0, x = 0, y = 0, tam = 0;
+  int opcion = 0;
   system ("clear");
   struct Matriz *matriz;
   matriz = NULL;
@@ -315,7 +300,6 @@ menu2 ()
   printf ("4. Colocar Barco Izquierda\n");
   printf ("5. Comenzar\n");
   printf ("6. SALIR\n");
-
   printf ("Escoje la opcion: ");
   scanf ("%d", &opcion);
   system ("clear");
@@ -324,53 +308,47 @@ menu2 ()
     {
 
     case 1:
-      printf ("Dame la coordenada en x: \n");
-      scanf ("%d", &x);
-      printf ("Dame la coordenada en y: \n");
-      scanf ("%d", &y);
-      printf ("Dime el tamaño del barco: \n");
-      scanf ("%d", &tam);
-      matriz = ColocarAbajo (matriz, x, y, tam);
+      matriz = coordenadas (matriz, opcion);
       break;
     case 2:
-      printf ("Dame la coordenada en x: \n");
-      scanf ("%d", &x);
-      printf ("Dame la coordenada en y: \n");
-      scanf ("%d", &y);
-      printf ("Dime el tamaño del barco: \n");
-      scanf ("%d", &tam);
-      matriz = ColocarArriba (matriz, x, y, tam);
+      matriz = coordenadas (matriz, opcion);
       break;
     case 3:
-      printf ("Dame la coordenada en x: \n");
-      scanf ("%d", &x);
-      printf ("Dame la coordenada en y: \n");
-      scanf ("%d", &y);
-      printf ("Dime el tamaño del barco: \n");
-      scanf ("%d", &tam);
-      matriz = ColocarDerecha (matriz, x, y, tam);
+      matriz = coordenadas (matriz, opcion);
       break;
     case 4:
-      printf ("Dame la coordenada en x: \n");
-      scanf ("%d", &x);
-      printf ("Dame la coordenada en y: \n");
-      scanf ("%d", &y);
-      printf ("Dime el tamaño del barco: \n");
-      scanf ("%d", &tam);
-      matriz = ColocarIzquierda (matriz, x, y, tam);
+      matriz = coordenadas (matriz, opcion);
       break;
     case 5:
       break;
-
     case 6:
       system ("exit");
-
     }
-  printf ("Este es el tablero de juego:       ");
-
+  printf ("ESTE ES TU CAMPO DE JUEGO: \n ");
   mostrar (matriz);
-
 }
+
+struct Matriz *
+coordenadas (struct Matriz *matriz, int direccion)
+{
+  int x, y, tambarco;
+  printf ("Dame la coordenada en x: \n");
+  scanf ("%d", &x);
+  printf ("Dame la coordenada en y: \n");
+  scanf ("%d", &y);
+  printf ("Dime el tamaño del barco: \n");
+  scanf ("%d", &tambarco);
+  if (direccion == 1)
+    matriz = ColocarAbajo (matriz, x, y, tambarco);
+  else if (direccion == 2)
+    matriz = ColocarArriba (matriz, x, y, tambarco);
+  else if (direccion == 3)
+    matriz = ColocarDerecha (matriz, x, y, tambarco);
+  else
+    matriz = ColocarIzquierda (matriz, x, y, tambarco);
+  return matriz;
+}
+
 
 void
 instrucciones ()

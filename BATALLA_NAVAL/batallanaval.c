@@ -2,23 +2,23 @@
 
 /*------------------------SE GENERA MATRIZ--------------------------------------------*/
 struct Matriz *
-crearmatriz ()
+crearmatriz (struct Matriz *matriz)
 {
-  struct Matriz *matrz = (struct Matriz *) malloc (sizeof (struct Matriz));
-  if (matrz != NULL)
+  matriz = (struct Matriz *) malloc (sizeof (struct Matriz));
+  if (matriz != NULL)
     {
-      matrz = NULL;
-      return matrz;
+      matriz = NULL;
+      return matriz;
     }
 
   else
     printf ("\n Sin espacio");
-  return matrz;
+  return matriz;
 }
 
 /*---------------GENERA LAS COORDENADAS DE LOS BARCOS-----------------------*/
 struct Matriz *
-pedir (struct Matriz *matriz)
+generarcoordenadas (struct Matriz *matriz)
 {
   int i, j;
   for (i = 1; i <= 10; i++)
@@ -251,7 +251,7 @@ menu ()
   system ("clear");
   printf ("\n\t\t\t MENU 	\n");
   printf ("-----------------------------\n");
-  printf ("1. Iniciar Juego\n");
+  printf ("1. 1 VS 1\n");
   printf ("2. Instrucciones\n");
   printf ("3. Salir del Juego\n");
   printf ("Opcion: ");
@@ -271,7 +271,7 @@ menu ()
 	{
 
 	case 1:
-	  menu2 ();
+	  vs ();
 	  break;
 	case 2:
 	  instrucciones ();
@@ -283,17 +283,16 @@ menu ()
     }
 }
 
-void
-menu2 ()
+struct Matriz *
+colocacion (struct Matriz *matriz, int numbarcos)
 {
   int opcion = 0;
   system ("clear");
-  struct Matriz *matriz;
-  matriz = NULL;
-  matriz = crearmatriz (matriz);
-  matriz = pedir (matriz);
-  printf
-    ("Antes de comenzar es necesario que indiques donde quieres colocar tu barco y la posicion\n");
+  /*struct Matriz *matriz;
+     matriz = NULL;
+     matriz = crearmatriz (matriz);
+     matriz = pedir (matriz); */
+  printf ("Tienes : %d Barcos\n¿En donde quieres colocarlo?\n\n", numbarcos);
   printf ("1. Colocar barco Abajo\n");
   printf ("2. Colocar Barco Arriba\n");
   printf ("3. Colocar Barco Derecha\n");
@@ -326,6 +325,7 @@ menu2 ()
     }
   printf ("ESTE ES TU CAMPO DE JUEGO: \n ");
   mostrar (matriz);
+  return matriz;
 }
 
 struct Matriz *
@@ -349,6 +349,58 @@ coordenadas (struct Matriz *matriz, int direccion)
   return matriz;
 }
 
+void
+vs ()
+{
+  struct Matriz *tablero1;
+  struct Matriz *tablero2;
+  struct Matriz *tablero3;
+  tablero1 = comenzar (tablero1, 1);
+  campodebatalla (tablero1);
+  tablero2 = comenzar (tablero2, 2);
+  campodebatalla (tablero2);
+
+}
+
+void
+campodebatalla (struct Matriz *matriz)
+{
+  system ("clear");
+  printf ("\n TU CAMPO DE BATALLA QUEDO ASI:\n");
+  mostrar (matriz);
+  printf ("\t\t\t\t\t********Presiona ENTER para continuar************\n");
+  __fpurge (stdin);
+  getchar ();
+  system ("clear");
+  system ("clear");
+
+}
+
+
+struct Matriz *
+comenzar (struct Matriz *matriz, int jugador)
+{
+  system ("clear");
+  int i;
+  matriz = tablero (matriz);;
+  printf
+    ("\n\n\n\n\n\t\t\t\t\t\t\t**********TURNO DEL %d JUGADOR**********\n\t\t\t\t\t\t\t**********COLOCA TUS BARCOS A CONTINUACION.... \n\n\n\n\t\t\t\t\t\t\t****Presiona la tecla ENTER****",
+     jugador);
+  __fpurge (stdin);
+  getchar ();
+  for (i = 5; i >= 1; i--)
+    matriz = colocacion (matriz, i);
+  return matriz;
+}
+
+struct Matriz *
+tablero (struct Matriz *tableros)
+{
+  tableros = crearmatriz (tableros);
+  tableros = generarcoordenadas (tableros);
+  return tableros;
+
+}
 
 void
 instrucciones ()

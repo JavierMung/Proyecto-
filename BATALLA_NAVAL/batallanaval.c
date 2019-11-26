@@ -68,15 +68,33 @@ ColocarArriba (struct Matriz *matriz, int x, int y, int tambarco,
 	       int numbarcos)
 {
   struct Matriz *aux = matriz;
-  int cont = 1;
+  int cont = 1,conta= 0,  m = 0;
   if (tambarco > y || tambarco <= 0)
     recolocar (matriz, numbarcos);
   else
     {
       while (aux != NULL)
 	{
+		
 	  if (aux->x == x && aux->y >= ((y - tambarco) + 1))
 	    {
+		    if (aux->dato!=0 ){
+			aux=aux->anterior;
+			m=(tambarco - aux-> y)-1;
+
+			while(aux != NULL  ){
+
+                        if (aux->x == x && aux->y <=  y  ){
+
+                        aux->dato=0;
+				}
+
+			aux = aux->anterior;
+			}
+                          recolocar (matriz, numbarcos);
+
+				return matriz;
+		    }
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -110,7 +128,7 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
 
 		while(aux != NULL){
 		
-			if (aux->x == x && aux->y >= y){
+			if (aux->x == x && aux->y <= y){
 			
 			aux->dato=0;
 			

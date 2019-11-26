@@ -8,10 +8,10 @@ batallanaval.o: batallanaval.c
 	gcc -c batallanaval.c
 
 indent: 
-	indent *.c
+	indent *.c *.h
 
 run: a.out
 	./a.out
 
 clean: 
-	rm a.out *.o *.c~
+	rm a.out *.o *.c~ *.h~

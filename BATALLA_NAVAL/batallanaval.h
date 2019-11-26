@@ -29,10 +29,10 @@ struct Matriz *comenzar(struct Matriz *, int);
 void menu();
 struct Matriz *colocacion(struct Matriz *, int);
 void instrucciones();
-<<<<<<< HEAD
-struct Matriz *aleatorios(struct  Matriz *, int *);
-=======
+
+struct Matriz *aleatorios(struct  Matriz *);
+
 void vs();
 void campodebatalla(struct Matriz *);
->>>>>>> 55778731264c512c35978efed67a483f83822823
+
 #endif

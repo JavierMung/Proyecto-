@@ -17,12 +17,12 @@ struct Matriz
 struct Matriz * crearmatriz();
 struct Matriz *pedir (struct Matriz *); 
 struct Matriz *insertar (struct Matriz *, int, int, int);
-void mostrar (struct Matriz *); 
-struct Matriz *mostrar2 (struct Matriz *, int, int, int);
 struct Matriz *ColocarArriba (struct Matriz *, int, int, int);
 struct Matriz *ColocarAbajo (struct Matriz *, int, int, int);
 struct Matriz *ColocarIzquierda (struct Matriz *, int, int, int);
 struct Matriz *ColocarDerecha (struct Matriz *, int, int, int);
+void mostrar(struct Matriz *);
+struct Matriz *coordenadas(struct Matriz *, int );
 void menu();
 void menu2();
 void instrucciones();

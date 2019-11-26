@@ -93,8 +93,8 @@ struct Matriz *
 ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
 	      int numbarcos)
 {
-  struct Matriz *aux = matriz;
-  int cont = 1;
+  struct Matriz  *aux = matriz;
+  int cont = 1, conta= 1;
   if ((tambarco + y) > 11 || tambarco <= 0)
     recolocar (matriz, numbarcos);
   else
@@ -103,11 +103,29 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
 	{
 	  if (aux->x == x && aux->y >= y)
 	    {
-	      if (aux->dato != 0)
-		{
-		  printf ("Barco demasiado grande\n");
-		  return matriz;
+		 
+		if(aux->dato!=0){
+		printf ("Barco demasiado grande-- \n");
+		aux=aux->anterior;
+
+		while(aux != NULL){
+		
+			if (aux->x == x && aux->y >= y){
+			
+			aux->dato=0;
+			
+			}
+			aux=aux->anterior;
+
+
 		}
+		
+                recolocar (matriz, numbarcos);
+		return matriz;
+		}
+
+		
+				 
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -115,7 +133,7 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
 	    }
 	  aux = aux->siguiente;
 	}
-    }
+     }
   return matriz;
 }
 

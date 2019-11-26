@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdio_ext.h>
-
+#include <time.h>
 struct Matriz
 {
   int x;
@@ -26,4 +26,5 @@ struct Matriz *coordenadas(struct Matriz *, int );
 void menu();
 void menu2();
 void instrucciones();
+struct Matriz *aleatorios(struct  Matriz *, int *);
 #endif

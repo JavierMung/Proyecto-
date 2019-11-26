@@ -286,7 +286,7 @@ menu ()
 void
 menu2 ()
 {
-  int opcion = 0;
+  int opcion = 0, cont= 1;
   system ("clear");
   struct Matriz *matriz;
   matriz = NULL;
@@ -300,6 +300,7 @@ menu2 ()
   printf ("4. Colocar Barco Izquierda\n");
   printf ("5. Comenzar\n");
   printf ("6. SALIR\n");
+  while(cont!=5  &&  opcion != 5){
   printf ("Escoje la opcion: ");
   scanf ("%d", &opcion);
   system ("clear");
@@ -320,14 +321,17 @@ menu2 ()
       matriz = coordenadas (matriz, opcion);
       break;
     case 5:
+      matriz = aleatorios (matriz, &cont);
       break;
     case 6:
       system ("exit");
     }
+  cont ++;
+  }
   printf ("ESTE ES TU CAMPO DE JUEGO: \n ");
   mostrar (matriz);
+ 
 }
-
 struct Matriz *
 coordenadas (struct Matriz *matriz, int direccion)
 {
@@ -358,4 +362,33 @@ instrucciones ()
   __fpurge (stdin);
   getchar ();
   menu ();
+}
+
+struct Matriz *
+aleatorios (struct Matriz* matriz, int * contador ){
+
+	int direccion = 0;
+	int x, y, tambarco;
+	srand(time(NULL));
+	while((*contador)!= 5){
+
+   direccion= 1 + rand()% (5-1);
+	x= 1 + rand()% (11-1);
+	y= 1 + rand()% (11-1);
+	tambarco= 1 + rand()% (5-1);
+
+   if (direccion == 1)
+    matriz = ColocarAbajo (matriz, x, y, tambarco);
+  else if (direccion == 2)
+    matriz = ColocarArriba (matriz, x, y, tambarco);
+  else if (direccion == 3)
+    matriz = ColocarDerecha (matriz, x, y, tambarco);
+  else (direccion == 4);
+    matriz = ColocarIzquierda (matriz, x, y, tambarco);
+  
+   (*contador)++;
+	
+	}
+
+	return matriz;
 }

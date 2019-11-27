@@ -325,7 +325,8 @@ menu ()
   matriz = NULL;
   system ("clear");
   printf
-    ("\t\t\t\t\t\t***BIENVENIDO A ***\n\n\t\t\t\t\t  ****BATALLA NAVAL ****\n\n\n\n\n\nPresione ENTER para continuar\n");
+    ("\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t  *********B I E N V E N I D O  A *********\n\n\t\t\t\t        **********B A T A L L A  N A V A L**********\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n -Presione ENTER para continuar-\n");
+
   __fpurge (stdin);
   getchar ();
   system ("clear");
@@ -340,7 +341,7 @@ menu ()
   if (opcion <= 0 || opcion > 3)
     {
       printf
-	("\n\n\n \t\t\t\t\tESCOGA UNA OPCION VALIDA...\t\t\t\t\tPRESIONE ENTER PARA CONTINUAR\n");
+	("\n\n\n \t\t\t\t\tESCOGA UNA OPCION VALIDA...\n\n\n\n\t\t\t\t\tPRESIONE ENTER PARA CONTINUAR\n");
       __fpurge (stdin);
       getchar ();
       menu ();
@@ -397,7 +398,7 @@ colocacion (struct Matriz *matriz, int numbarcos)
     case 5:
       matriz = aleatorios (matriz, numbarcos);
       break;
-    case 6:
+    case 6:printf("\t\t\ŧ\t GRACIAS POR JUGAR \n");
       exit (-1);
     }
 
@@ -439,8 +440,8 @@ vs ()
   tablero2 = comenzar (tablero2, 2);
   campodebatalla (tablero2);
   system ("clear");
-  printf ("\n\n\n\t\t\t\t*******COMENCEMOS***********\n\n\n\n\n ");
-  printf ("\t\tPresione enter para continuar");
+  printf ("\n\n\n\t\t\t\t\t**********COMENCEMOS**********\n\n\n\n\n ");
+  printf ("Presione enter para continuar");
   __fpurge (stdin);
   getchar ();
   iniciar (tablero1, tablero2, 1);
@@ -469,7 +470,7 @@ campodebatalla (struct Matriz *matriz)
   system ("clear");
   printf ("\n TU CAMPO DE BATALLA QUEDO ASI:\n");
   mostrar (matriz, 0);
-  printf ("\t\t\t\t\t********Presiona ENTER para continuar************\n");
+  printf ("\t\t\t\t********Presiona ENTER para continuar********\n");
   __fpurge (stdin);
   getchar ();
   system ("clear");
@@ -493,7 +494,8 @@ recolocar (struct Matriz *matriz, int numbarcos, int opc)
     }
   else
     {
-      printf ("\n\n\t\t\tASIGANDO COLOCACION.....\n");
+      printf ("\n\n\t\t\t\t\t   ASIGNANDO COLOCACION...\n");
+      printf("\n\n\t\t\t\t\t    ESPERE UN MOMENTO...\n");
       aleatorios (matriz, numbarcos);
     }
   system ("clear");
@@ -508,7 +510,7 @@ comenzar (struct Matriz *matriz, int jugador)
   int i;
   matriz = tablero (matriz);;
   printf
-    ("\n\n\n\n\n\t\t\t\t\t\t\t**********TURNO DEL %d JUGADOR**********\n\t\t\t\t\t\t\t**********COLOCA TUS BARCOS A CONTINUACION.... \n\n\n\n\t\t\t\t\t\t\t****Presiona la tecla ENTER****",
+    ("\n\n\n\n\n\t\t\t\t    **********TURNO DEL %d JUGADOR**********\n\t\t\t\t\********COLOCA TUS BARCOS A CONTINUACION******** \n\n\n\n\t\t\t\t\t****Presiona la tecla ENTER****",
      jugador);
   __fpurge (stdin);
   getchar ();
@@ -528,7 +530,7 @@ tablero (struct Matriz *tableros)
 void
 instrucciones ()
 {
-  printf ("\n\tPara este juego es necesario ... \n ");
+  printf ("\n\tPara este juego es necesario que ingreses las coordenadas del barco y el tamaño del barco en tu campo, recuerda en asignar el barco en un lugar donde exista espacio (cada jugador tiene 5 espacios) , tambien puedes llenar aleatoriamente los barcos. Una vez llenado el campo de ambos jugadores, cada jugador tendra la oportunidad de atacar el campo enemigo, si lo logras tendras una oportunidad mas. Gana el jugador que logre derribar todos los barcos enemigos. SUERTE ... \n ");
   printf ("presione enter para continuar: ");
   __fpurge (stdin);
   getchar ();
@@ -678,7 +680,7 @@ void
 iniciar (struct Matriz *tablero1, struct Matriz *tablero2, int jugador)
 {
   system ("clear");
-  printf ("\n\n\n\n\t\t\t\t\t\t ATACA JUGADOR %d \n ", jugador);
+  printf ("\n\n\n\n\t\t\t\t\t\t ~~ ATACA JUGADOR  %d ~~ \n\n\n\n ", jugador);
   printf ("presione enter para continuar: ");
   __fpurge (stdin);
   getchar ();

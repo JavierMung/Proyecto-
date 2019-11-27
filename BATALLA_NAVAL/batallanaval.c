@@ -68,7 +68,7 @@ ColocarArriba (struct Matriz *matriz, int x, int y, int tambarco,
 	       int numbarcos)
 {
   struct Matriz *aux = matriz;
-  int cont = 1,conta= 0,  m = 0;
+  int cont = 1,conta= 1;  
   if (tambarco > y || tambarco <= 0)
     recolocar (matriz, numbarcos);
   else
@@ -80,15 +80,18 @@ ColocarArriba (struct Matriz *matriz, int x, int y, int tambarco,
 	    {
 		    if (aux->dato!=0 ){
 			aux=aux->anterior;
-			m=(tambarco - aux-> y)-1;
+			
 
 			while(aux != NULL  ){
 
                         if (aux->x == x && aux->y <=  y  ){
 
                         aux->dato=0;
+			conta++;
 				}
-
+			if (conta == cont){
+			break;
+			}	
 			aux = aux->anterior;
 			}
                           recolocar (matriz, numbarcos);
@@ -161,7 +164,7 @@ ColocarIzquierda (struct Matriz *matriz, int x, int y, int tambarco,
 		  int numbarcos)
 {
   struct Matriz *aux = matriz;
-  int cont = 1;
+  int cont = 1, conta = 1;
   if (tambarco > x || tambarco <= 0)
     recolocar (matriz, numbarcos);
   else
@@ -169,7 +172,21 @@ ColocarIzquierda (struct Matriz *matriz, int x, int y, int tambarco,
       while (aux != NULL)
 	{
 	  if (aux->x > (x - tambarco) && aux->y == y)
-	    {			//COLOCAR IZQUIERDA
+	    {	
+    		if(aux->dato!=0){
+		aux=aux->anterior;
+		while(aux!= NULL){
+			aux->dato= 0;
+			if(cont== conta){
+			break;
+			}
+			conta++;
+			aux= aux->anterior;
+		}
+		   recolocar (matriz, numbarcos);
+                return matriz;
+
+		}		    //COLOCAR IZQUIERDA
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -202,12 +219,14 @@ ColocarDerecha (struct Matriz *matriz, int x, int y, int tambarco,
 		  aux = aux->anterior;
 		  while (aux2 != cont)
 		    {
-		      aux->dato = cont - 1;
+		      aux->dato = 0;
 		      aux = aux->anterior;
 		      aux2++;
 		    }
 
-		  break;
+		   recolocar (matriz, numbarcos);
+                return matriz;
+
 		}
 
 	      aux->dato = tambarco;
@@ -362,7 +381,7 @@ colocacion (struct Matriz *matriz, int numbarcos)
       matriz = coordenadas (matriz, opcion, numbarcos);
       break;
     case 5:
-      matriz = aleatorios (matriz);
+      matriz = aleatorios (matriz, numbarcos);
       break;
     case 6:
       exit (-1);
@@ -474,23 +493,23 @@ instrucciones ()
 }
 
 struct Matriz *
-aleatorios (struct Matriz *matriz)
+aleatorios (struct Matriz *matriz, int numbarcos)
 {
   int direccion = 0;
-  int x, y, tambarco;
+  int x=0, y=0, tambarco=0;
   srand (time (NULL));
   direccion = 1 + rand () % (5 - 1);
   x = 1 + rand () % (11 - 1);
   y = 1 + rand () % (11 - 1);
-  tambarco = 1 + rand () % (5 - 1);
+  tambarco = 1 + rand () % (11 - 1);
+
   if (direccion == 1)
-    matriz = ColocarAbajo (matriz, x, y, tambarco, 0);
+    matriz = ColocarAbajo (matriz, x, y, tambarco, numbarcos);
   else if (direccion == 2)
-    matriz = ColocarArriba (matriz, x, y, tambarco, 0);
+    matriz = ColocarArriba (matriz, x, y, tambarco, numbarcos);
   else if (direccion == 3)
-    matriz = ColocarDerecha (matriz, x, y, tambarco, 0);
-  else
-    (direccion == 4);
-  matriz = ColocarIzquierda (matriz, x, y, tambarco, 0);
+    matriz = ColocarDerecha (matriz, x, y, tambarco, numbarcos);
+  else if (direccion == 4)
+  matriz = ColocarIzquierda (matriz, x, y, tambarco, numbarcos);
   return matriz;
 }

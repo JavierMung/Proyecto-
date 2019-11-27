@@ -29,7 +29,7 @@ struct Matriz *comenzar (struct Matriz *, int);
 void menu ();
 struct Matriz *colocacion (struct Matriz *, int);
 void instrucciones ();
-struct Matriz *aleatorios (struct Matriz *);
+struct Matriz *aleatorios (struct Matriz *, int );
 void vs ();
 void campodebatalla (struct Matriz *);
 void recolocar (struct Matriz *, int);

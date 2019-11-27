@@ -33,4 +33,5 @@ struct Matriz *aleatorios (struct Matriz *, int );
 void vs ();
 void campodebatalla (struct Matriz *);
 void recolocar (struct Matriz *, int);
+void tiro(struct Matriz *, int , int);
 #endif

@@ -131,22 +131,22 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
 
 		while(aux != NULL){
 		
-			if (aux->x == x && aux->y <= y){
-			
-			aux->dato=0;
-			
+			if (aux->x == x && aux->y >= y){
+			aux->dato= 0;
+			conta ++;
 			}
+                        if(cont== conta){
+
+                        break;
+                        }
+			
+			
 			aux=aux->anterior;
+			}
+                    recolocar (matriz, numbarcos);
+                   return matriz;
 
-
-		}
-		
-                recolocar (matriz, numbarcos);
-		return matriz;
-		}
-
-		
-				 
+	             }		 
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -276,9 +276,17 @@ mostrar (struct Matriz *matriz)	/*Funcion para darle formato al tablero y coloca
 	      printf ("|");
 	    }
 	  if (matriz != NULL)
-	    {
+	    {     
+		    
+		 if(matriz->dato!= 0 ){
 	      printf (" %2d |", matriz->dato);
 	      matriz = matriz->siguiente;
+				}
+	    	else{
+		printf ("    |");
+              matriz = matriz->siguiente;
+		 }
+		
 	    }
 	}
       printf ("\n");
@@ -390,7 +398,8 @@ colocacion (struct Matriz *matriz, int numbarcos)
 
   printf ("ESTE ES TU CAMPO DE JUEGO: \n ");
   mostrar (matriz);
-
+ 
+//	tiro(matriz, 5, 5);
   return matriz;
 }
 
@@ -425,6 +434,14 @@ vs ()
   campodebatalla (tablero1);
   tablero2 = comenzar (tablero2, 2);
   campodebatalla (tablero2);
+	
+  
+  	mostrar(tablero1);
+
+	mostrar(tablero2);
+
+	tiro(tablero1, 5, 5);
+	 tiro(tablero2, 5, 5);
 
 }
 
@@ -513,3 +530,75 @@ aleatorios (struct Matriz *matriz, int numbarcos)
   matriz = ColocarIzquierda (matriz, x, y, tambarco, numbarcos);
   return matriz;
 }
+
+void tiro(struct Matriz * matriz, int x, int y){
+
+
+ int i, j, b = 4;
+  printf ("\n");
+  for (i = 0; i <= 10; i++)
+    {
+      if (i == 0)
+        printf ("     ");
+      else
+        printf (" %2i  ", i);
+    }
+  printf ("\n");
+  for (i = 0; i < 55; i++)
+    {
+      if (i < 4)
+        printf (" ");
+      else
+        printf ("_");
+    }
+  printf ("\n");
+  for (i = 0; i < 10; i++)
+    {
+      printf ("%2i  |", i + 1);
+      for (j = 0; j < 10; j++)
+        {
+          if (i == 10)
+            {
+              for (i = 0; i < 10; i++)
+                {
+                  printf (" | %d ", i + 1);
+                }
+              printf ("|");
+            }
+          if (matriz != NULL)
+            {
+
+                 if(matriz->x == x && matriz->y== y ){
+              printf (" %2d |", matriz->dato);
+              matriz = matriz->siguiente;
+                                }
+                else{
+                printf ("    |");
+              matriz = matriz->siguiente;
+                 }
+
+            }
+        }
+      printf ("\n");
+      for (j = 0; j < 55; j++)
+        {
+          if (j == b)
+            {
+              printf ("|");
+              b += 5;
+            }
+
+          else if (j < 4)
+            printf (" ");
+          else if (i == 9)
+            printf ("_");
+          else
+            printf ("-");
+        }
+      b = 4;
+      printf ("\n");
+    }
+  printf ("\n\n");
+}
+
+

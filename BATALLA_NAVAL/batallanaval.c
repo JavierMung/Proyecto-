@@ -40,6 +40,7 @@ insertar (struct Matriz *matriz, int dato, int x, int y)
   if (matriznueva != NULL)
     {
       matriznueva->dato = dato;
+      matriznueva->datoex = dato;
       matriznueva->x = x;
       matriznueva->y = y;
       matriznueva->siguiente = NULL;
@@ -65,39 +66,43 @@ insertar (struct Matriz *matriz, int dato, int x, int y)
 /*----------------COLOCAR HACIA ARRIBA----------------------------------*/
 struct Matriz *
 ColocarArriba (struct Matriz *matriz, int x, int y, int tambarco,
-	       int numbarcos)
+	       int numbarcos, int opc)
 {
   struct Matriz *aux = matriz;
-  int cont = 1,conta= 1;  
+  int cont = 1, conta = 1;
   if (tambarco > y || tambarco <= 0)
-    recolocar (matriz, numbarcos);
+    recolocar (matriz, numbarcos, opc);
   else
     {
       while (aux != NULL)
 	{
-		
+
 	  if (aux->x == x && aux->y >= ((y - tambarco) + 1))
 	    {
-		    if (aux->dato!=0 ){
-			aux=aux->anterior;
-			
+	      if (aux->dato != 0)
+		{
+		  aux = aux->anterior;
 
-			while(aux != NULL  ){
 
-                        if (aux->x == x && aux->y <=  y  ){
+		  while (aux != NULL)
+		    {
 
-                        aux->dato=0;
-			conta++;
-				}
-			if (conta == cont){
-			break;
-			}	
-			aux = aux->anterior;
+		      if (aux->x == x && aux->y <= y)
+			{
+
+			  aux->dato = 0;
+			  conta++;
 			}
-                          recolocar (matriz, numbarcos);
-
-				return matriz;
+		      if (conta == cont)
+			{
+			  break;
+			}
+		      aux = aux->anterior;
 		    }
+		  recolocar (matriz, numbarcos, opc);
+
+		  return matriz;
+		}
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -112,41 +117,44 @@ ColocarArriba (struct Matriz *matriz, int x, int y, int tambarco,
 /*----------------COLOCAR HACIA ABAJO-------------------*/
 struct Matriz *
 ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
-	      int numbarcos)
+	      int numbarcos, int opc)
 {
-  struct Matriz  *aux = matriz;
-  int cont = 1, conta= 1;
+  struct Matriz *aux = matriz;
+  int cont = 1, conta = 1;
   if ((tambarco + y) > 11 || tambarco <= 0)
-    recolocar (matriz, numbarcos);
+    recolocar (matriz, numbarcos, opc);
   else
     {
       while (aux != NULL)
 	{
 	  if (aux->x == x && aux->y >= y)
 	    {
-		 
-		if(aux->dato!=0){
-		printf ("Barco demasiado grande-- \n");
-		aux=aux->anterior;
 
-		while(aux != NULL){
-		
-			if (aux->x == x && aux->y >= y){
-			aux->dato= 0;
-			conta ++;
+	      if (aux->dato != 0)
+		{
+		  printf ("Barco demasiado grande-- \n");
+		  aux = aux->anterior;
+
+		  while (aux != NULL)
+		    {
+
+		      if (aux->x == x && aux->y <= y)
+			{
+
+			  aux->dato = 0;
+
 			}
-                        if(cont== conta){
+		      aux = aux->anterior;
 
-                        break;
-                        }
-			
-			
-			aux=aux->anterior;
-			}
-                    recolocar (matriz, numbarcos);
-                   return matriz;
 
-	             }		 
+		    }
+
+		  recolocar (matriz, numbarcos, opc);
+		  return matriz;
+		}
+
+
+
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -154,39 +162,42 @@ ColocarAbajo (struct Matriz *matriz, int x, int y, int tambarco,
 	    }
 	  aux = aux->siguiente;
 	}
-     }
+    }
   return matriz;
 }
 
 /*---------------------COLOCAR HACIA LA IZQUIERDA------------------*/
 struct Matriz *
 ColocarIzquierda (struct Matriz *matriz, int x, int y, int tambarco,
-		  int numbarcos)
+		  int numbarcos, int opc)
 {
   struct Matriz *aux = matriz;
   int cont = 1, conta = 1;
   if (tambarco > x || tambarco <= 0)
-    recolocar (matriz, numbarcos);
+    recolocar (matriz, numbarcos, opc);
   else
     {
       while (aux != NULL)
 	{
 	  if (aux->x > (x - tambarco) && aux->y == y)
-	    {	
-    		if(aux->dato!=0){
-		aux=aux->anterior;
-		while(aux!= NULL){
-			aux->dato= 0;
-			if(cont== conta){
-			break;
+	    {
+	      if (aux->dato != 0)
+		{
+		  aux = aux->anterior;
+		  while (aux != NULL)
+		    {
+		      aux->dato = 0;
+		      if (cont == conta)
+			{
+			  break;
 			}
-			conta++;
-			aux= aux->anterior;
-		}
-		   recolocar (matriz, numbarcos);
-                return matriz;
+		      conta++;
+		      aux = aux->anterior;
+		    }
+		  recolocar (matriz, numbarcos, opc);
+		  return matriz;
 
-		}		    //COLOCAR IZQUIERDA
+		}		//COLOCAR IZQUIERDA
 	      aux->dato = tambarco;
 	      if (cont == tambarco)
 		break;
@@ -201,12 +212,12 @@ ColocarIzquierda (struct Matriz *matriz, int x, int y, int tambarco,
 /*----------------COLOCAR HACIA LA DERECHA-------------------------*/
 struct Matriz *
 ColocarDerecha (struct Matriz *matriz, int x, int y, int tambarco,
-		int numbarcos)
+		int numbarcos, int opc)
 {
   struct Matriz *aux = matriz;
   int cont = 1, aux2 = 1;
   if ((x + tambarco) > 11 || tambarco <= 0)
-    recolocar (matriz, numbarcos);
+    recolocar (matriz, numbarcos, opc);
   else
     {
       while (aux != NULL)
@@ -224,8 +235,8 @@ ColocarDerecha (struct Matriz *matriz, int x, int y, int tambarco,
 		      aux2++;
 		    }
 
-		   recolocar (matriz, numbarcos);
-                return matriz;
+		  recolocar (matriz, numbarcos, opc);
+		  return matriz;
 
 		}
 
@@ -242,7 +253,7 @@ ColocarDerecha (struct Matriz *matriz, int x, int y, int tambarco,
 
 /*------------------------FORMATO DE TABLERO ASI COMO SU DEMOSTRACION------------------*/
 void
-mostrar (struct Matriz *matriz)	/*Funcion para darle formato al tablero y colocar los datos */
+mostrar (struct Matriz *matriz, int opc)	/*Funcion para darle formato al tablero y colocar los datos */
 {
   int i, j, b = 4;
   printf ("\n");
@@ -276,17 +287,12 @@ mostrar (struct Matriz *matriz)	/*Funcion para darle formato al tablero y coloca
 	      printf ("|");
 	    }
 	  if (matriz != NULL)
-	    {     
-		    
-		 if(matriz->dato!= 0 ){
-	      printf (" %2d |", matriz->dato);
+	    {
+	      if (opc == 0)
+		printf (" %2d |", matriz->dato);
+	      else
+		printf (" %2d |", matriz->datoex);
 	      matriz = matriz->siguiente;
-				}
-	    	else{
-		printf ("    |");
-              matriz = matriz->siguiente;
-		 }
-		
 	    }
 	}
       printf ("\n");
@@ -367,13 +373,13 @@ colocacion (struct Matriz *matriz, int numbarcos)
   printf ("2. Colocar Barco Arriba\n");
   printf ("3. Colocar Barco Derecha\n");
   printf ("4. Colocar Barco Izquierda\n");
-  printf ("5. Llenar aleatoriamente y comenzar\n");
+  printf ("5. Llenar aleatoriamente\n");
   printf ("6. SALIR\n");
   printf ("Escoje la opcion: ");
   __fpurge (stdin);
   scanf ("%d", &opcion);
   system ("clear");
-  mostrar (matriz);
+  mostrar (matriz, 0);
   switch (opcion)
     {
     case 1:
@@ -397,9 +403,8 @@ colocacion (struct Matriz *matriz, int numbarcos)
 
 
   printf ("ESTE ES TU CAMPO DE JUEGO: \n ");
-  mostrar (matriz);
- 
-//	tiro(matriz, 5, 5);
+  mostrar (matriz, 0);
+
   return matriz;
 }
 
@@ -414,13 +419,13 @@ coordenadas (struct Matriz *matriz, int direccion, int numbarcos)
   printf ("Dime el tamaño del barco: \n");
   scanf ("%d", &tambarco);
   if (direccion == 1)
-    matriz = ColocarAbajo (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarAbajo (matriz, x, y, tambarco, numbarcos, 0);
   else if (direccion == 2)
-    matriz = ColocarArriba (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarArriba (matriz, x, y, tambarco, numbarcos, 0);
   else if (direccion == 3)
-    matriz = ColocarDerecha (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarDerecha (matriz, x, y, tambarco, numbarcos, 0);
   else
-    matriz = ColocarIzquierda (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarIzquierda (matriz, x, y, tambarco, numbarcos, 0);
   return matriz;
 }
 
@@ -429,20 +434,33 @@ vs ()
 {
   struct Matriz *tablero1;
   struct Matriz *tablero2;
-  struct Matriz *tablero3;
   tablero1 = comenzar (tablero1, 1);
   campodebatalla (tablero1);
   tablero2 = comenzar (tablero2, 2);
   campodebatalla (tablero2);
-	
-  
-  	mostrar(tablero1);
+  system ("clear");
+  printf ("\n\n\n\t\t\t\t*******COMENCEMOS***********\n\n\n\n\n ");
+  printf ("\t\tPresione enter para continuar");
+  __fpurge (stdin);
+  getchar ();
+  iniciar (tablero1, tablero2, 1);
 
-	mostrar(tablero2);
+}
 
-	tiro(tablero1, 5, 5);
-	 tiro(tablero2, 5, 5);
+int
+gano (struct Matriz *matriz)
+{
+  struct Matriz *aux = matriz;
+  int cont = 0;
+  while (aux != NULL)
+    {
+      if (aux->dato != 0)
+	cont++;
+      aux = aux->siguiente;
+    }
 
+  printf ("\n cont = %d\n", cont);
+  return cont;
 }
 
 void
@@ -450,7 +468,7 @@ campodebatalla (struct Matriz *matriz)
 {
   system ("clear");
   printf ("\n TU CAMPO DE BATALLA QUEDO ASI:\n");
-  mostrar (matriz);
+  mostrar (matriz, 0);
   printf ("\t\t\t\t\t********Presiona ENTER para continuar************\n");
   __fpurge (stdin);
   getchar ();
@@ -460,15 +478,24 @@ campodebatalla (struct Matriz *matriz)
 }
 
 void
-recolocar (struct Matriz *matriz, int numbarcos)
+recolocar (struct Matriz *matriz, int numbarcos, int opc)
 {
   system ("clear");
-  printf
-    ("\n\n\n\t\t\tELIGUE OTRA COORDENADA O CAMBIA EL TAMAÑO DEL BARCO\n\n\n\n\n");
-  printf ("\t\t\t\t\t********Presiona ENTER para continuar************\n");
-  __fpurge (stdin);
-  getchar ();
-  colocacion (matriz, numbarcos);
+  if (opc == 0)
+    {
+      printf
+	("\n\n\n\t\t\tELIGUE OTRA COORDENADA O CAMBIA EL TAMAÑO DEL BARCO\n\n\n\n\n");
+      printf
+	("\t\t\t\t\t********Presiona ENTER para continuar************\n");
+      __fpurge (stdin);
+      getchar ();
+      colocacion (matriz, numbarcos);
+    }
+  else
+    {
+      printf ("\n\n\t\t\tASIGANDO COLOCACION.....\n");
+      aleatorios (matriz, numbarcos);
+    }
   system ("clear");
   system ("clear");
 
@@ -496,7 +523,6 @@ tablero (struct Matriz *tableros)
   tableros = crearmatriz (tableros);
   tableros = generarcoordenadas (tableros);
   return tableros;
-
 }
 
 void
@@ -513,92 +539,165 @@ struct Matriz *
 aleatorios (struct Matriz *matriz, int numbarcos)
 {
   int direccion = 0;
-  int x=0, y=0, tambarco=0;
+  int x = 0, y = 0, tambarco = 0;
   srand (time (NULL));
   direccion = 1 + rand () % (5 - 1);
   x = 1 + rand () % (11 - 1);
   y = 1 + rand () % (11 - 1);
   tambarco = 1 + rand () % (11 - 1);
-
   if (direccion == 1)
-    matriz = ColocarAbajo (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarAbajo (matriz, x, y, tambarco, numbarcos, 1);
   else if (direccion == 2)
-    matriz = ColocarArriba (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarArriba (matriz, x, y, tambarco, numbarcos, 1);
   else if (direccion == 3)
-    matriz = ColocarDerecha (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarDerecha (matriz, x, y, tambarco, numbarcos, 1);
   else if (direccion == 4)
-  matriz = ColocarIzquierda (matriz, x, y, tambarco, numbarcos);
+    matriz = ColocarIzquierda (matriz, x, y, tambarco, numbarcos, 1);
   return matriz;
 }
 
-void tiro(struct Matriz * matriz, int x, int y){
 
+struct Matriz *
+ledio (struct Matriz *tablero1, struct Matriz *tablero2, int x, int y,
+       int jugador)
+{
+  struct Matriz *aux;
+  if (jugador == 1)
+    aux = tablero2;
+  else
+    aux = tablero1;
 
- int i, j, b = 4;
-  printf ("\n");
-  for (i = 0; i <= 10; i++)
+  while (aux != NULL)
     {
-      if (i == 0)
-        printf ("     ");
-      else
-        printf (" %2i  ", i);
-    }
-  printf ("\n");
-  for (i = 0; i < 55; i++)
-    {
-      if (i < 4)
-        printf (" ");
-      else
-        printf ("_");
-    }
-  printf ("\n");
-  for (i = 0; i < 10; i++)
-    {
-      printf ("%2i  |", i + 1);
-      for (j = 0; j < 10; j++)
-        {
-          if (i == 10)
-            {
-              for (i = 0; i < 10; i++)
-                {
-                  printf (" | %d ", i + 1);
-                }
-              printf ("|");
-            }
-          if (matriz != NULL)
-            {
 
-                 if(matriz->x == x && matriz->y== y ){
-              printf (" %2d |", matriz->dato);
-              matriz = matriz->siguiente;
-                                }
-                else{
-                printf ("    |");
-              matriz = matriz->siguiente;
-                 }
-
-            }
-        }
-      printf ("\n");
-      for (j = 0; j < 55; j++)
-        {
-          if (j == b)
-            {
-              printf ("|");
-              b += 5;
-            }
-
-          else if (j < 4)
-            printf (" ");
-          else if (i == 9)
-            printf ("_");
-          else
-            printf ("-");
-        }
-      b = 4;
-      printf ("\n");
+      if (aux->x == x && aux->y == y)
+	{
+	  if (aux->dato != 0)
+	    {
+	      aux->dato = 0;
+	      aux->datoex = 11;
+	      dio (tablero1, tablero2, jugador);
+	    }
+	  else
+	    {
+	      aux->datoex = 13;
+	      fallo ();
+	      if (jugador == 1)
+		iniciar (tablero1, tablero2, 2);
+	      else
+		iniciar (tablero1, tablero2, 1);
+	    }
+	  break;
+	}
+      aux = aux->siguiente;
     }
-  printf ("\n\n");
+  if (jugador == 1)
+    return tablero2;
+  else
+    return tablero1;
 }
 
+void
+dio (struct Matriz *tablero1, struct Matriz *tablero2, int jugador)
+{
+  int ganaste;
+  system ("clear");
+  printf
+    ("\n\n\n\n\t\t\t\t\t\t ¡¡¡¡¡LE DISTE!!! \n\n\n\n\t\t\t\t\t TIENES OTRA OPORTUNIDAD\n\n ");
+  printf ("presione enter para continuar: ");
+  __fpurge (stdin);
+  getchar ();
+  if (jugador == 1)
+    {
+      ganaste = gano (tablero2);
+      if (ganaste == 0)
+	{
+	  gane_ ();
+	  menu ();
+	}
+      else
+	iniciar (tablero1, tablero2, jugador);
 
+    }
+  else
+    {
+      ganaste = gano (tablero1);
+      if (ganaste == 0)
+	{
+	  gane_ ();
+	  menu ();
+	}
+      else
+	iniciar (tablero1, tablero2, jugador);
+    }
+}
+
+void
+gane_ ()
+{
+  system ("clear");
+  printf
+    ("\n\n\n\n\t\t\t\t\t\t ¡¡¡¡¡ENHORA BUENA: GANASTE :D !!! \n\n\n\n\n ");
+  printf ("presione enter para continuar: ");
+  __fpurge (stdin);
+  getchar ();
+}
+
+void
+fallo ()
+{
+  system ("clear");
+  printf ("\n\n\n\n\t\t\t\t\t\t ¡¡¡¡¡FALLASTE!!! \n\n\n\n\n ");
+  printf ("presione enter para continuar: ");
+  __fpurge (stdin);
+  getchar ();
+}
+
+struct Matriz *
+coordenadasatacar (struct Matriz *tablero1, struct Matriz *tablero2,
+		   int jugador)
+{
+  int x, y;
+  printf ("Dame la coordenada en x: \n");
+  scanf ("%d", &x);
+  printf ("Dame la coordenada en y: \n");
+  scanf ("%d", &y);
+  if (jugador == 1)
+    {
+      tablero2 = ledio (tablero1, tablero2, x, y, jugador);
+      return tablero2;
+    }
+  else
+    {
+      tablero1 = ledio (tablero1, tablero2, x, y, jugador);
+      return tablero1;
+    }
+}
+
+void
+iniciar (struct Matriz *tablero1, struct Matriz *tablero2, int jugador)
+{
+  system ("clear");
+  printf ("\n\n\n\n\t\t\t\t\t\t ATACA JUGADOR %d \n ", jugador);
+  printf ("presione enter para continuar: ");
+  __fpurge (stdin);
+  getchar ();
+  if (jugador == 1)
+    {
+      printf ("\n\n TU CAMPO: \n\n");
+      mostrar (tablero1, 0);
+      printf ("\n\n CAMPO ENEMIGO: \n\n");
+      mostrar (tablero2, 1);
+      printf ("\n\n11 = ACIERTOS || 12 = FALLADOS\n\n");
+      tablero2 = coordenadasatacar (tablero1, tablero2, 1);
+    }
+  else
+    {
+      printf ("\n\n TU CAMPO: \n\n");
+      mostrar (tablero2, 0);	//0 es para ver las posiciones del barco del jugador en turno
+      printf ("\n\n CAMPO ENEMIGO: \n\n");
+      mostrar (tablero1, 1);	//el 1 es solo para mostrar los ataques dados
+      printf ("\n\n11 = ACIERTOS || 13 = FALLADOS\n\n");
+      tablero1 = coordenadasatacar (tablero1, tablero2, 2);
+    }
+}

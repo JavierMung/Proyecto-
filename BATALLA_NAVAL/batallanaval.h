@@ -40,4 +40,5 @@ void recolocar (struct Matriz *, int, int);
 void dio (struct Matriz *, struct Matriz *, int);
 void fallo ();
 void gane_ ();
+void salir ();
 #endif

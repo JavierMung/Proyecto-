@@ -6,7 +6,6 @@
 Cruz Segundo Moises 2018391001 1cv10
 
 Munguia Galeana Francisco Javier 2019630211 1cv8
-  1cv8
 
 #Descripcion del proyecto:
 

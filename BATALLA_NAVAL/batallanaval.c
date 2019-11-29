@@ -632,7 +632,7 @@ dio (struct Matriz *tablero1, struct Matriz *tablero2, int jugador)
       ganaste = gano (tablero2);
       if (ganaste == 0)
 	{
-	  gane_ ();
+	  gane_ (jugador);
 	  menu ();
 	}
       else
@@ -644,7 +644,7 @@ dio (struct Matriz *tablero1, struct Matriz *tablero2, int jugador)
       ganaste = gano (tablero1);
       if (ganaste == 0)
 	{
-	  gane_ ();
+	  gane_ (jugador);
 	  menu ();
 	}
       else
@@ -653,11 +653,12 @@ dio (struct Matriz *tablero1, struct Matriz *tablero2, int jugador)
 }
 
 void
-gane_ ()
+gane_ (int jugador)
 {
   system ("clear");
   printf
-    ("\n\n\n\n\t\t\t\t\t\t ¡¡¡¡¡ENHORA BUENA: GANASTE :D !!! \n\n\n\n\n ");
+    ("\n\n\n\n\t\t\t\t\t\t ¡¡¡¡¡ENHORA BUENA: GANO JUGADOR  %d !!! \n\n\n\n\n ",
+     jugador);
   printf ("presione enter para continuar: ");
   __fpurge (stdin);
   getchar ();

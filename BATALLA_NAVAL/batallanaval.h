@@ -39,6 +39,6 @@ void campodebatalla (struct Matriz *);
 void recolocar (struct Matriz *, int, int);
 void dio (struct Matriz *, struct Matriz *, int);
 void fallo ();
-void gane_ ();
+void gane_ (int);
 void salir ();
 #endif
